@@ -1,0 +1,5 @@
+- name: Deploy DOCKER to All Servers
+  hosts: Servers
+  become: yes
+  roles:
+    - ubuntu-docker

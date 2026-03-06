@@ -1,0 +1,45 @@
+<mxfile host="65bd71144e">
+    <diagram id="observability-stack" name="Loki Prometheus Flow">
+        <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="target" value="&lt;b&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 18px&quot;&gt;TARGET HOSTS&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 15px&quot;&gt;(APP, DB, DMZ, MGMT)&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;startSize=30;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="200" width="240" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="promtail" value="&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 15px&quot;&gt;📄 Promtail&lt;br&gt;(Log Collector)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="target">
+                    <mxGeometry x="20" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="exporter" value="&lt;font face=#Liberation Sans# style=#font-size: 15px#&gt;📈 Node Exporter&lt;br&gt;(Metrics)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="target">
+                    <mxGeometry x="20" y="100" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sec" value="&lt;b&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 18px&quot;&gt;SEC ZONE (Central)&lt;/font&gt;&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;startSize=30;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="160" width="260" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="loki" value="&lt;b&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 16px&quot;&gt;LOKI&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 14px&quot;&gt;(Log Aggregator)&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="sec">
+                    <mxGeometry x="30" y="40" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="prometheus" value="&lt;b&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 16px&quot;&gt;PROMETHEUS&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 14px&quot;&gt;(TSDB / Metrics)&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="sec">
+                    <mxGeometry x="30" y="140" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="grafana" value="&lt;b&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 18px&quot;&gt;GRAFANA&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 15px&quot;&gt;(Dashboards &amp; Alerts)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="460" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 14px&quot;&gt;Push Logs (HTTP)&lt;/font&gt;" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0055AA;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="promtail" target="loki">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2" value="&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 14px&quot;&gt;Pull Metrics (9100)&lt;/font&gt;" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#CC6600;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="prometheus" target="exporter">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="f3" value="&lt;font face=&quot;Liberation Sans&quot; style=&quot;font-size: 14px&quot;&gt;Query Data&lt;/font&gt;" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=2;strokeColor=#660066;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="loki" target="grafana">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <Array as="points"><mxPoint x="720" y="240"/><mxPoint x="720" y="460"/></Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="f4" value="" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=2;strokeColor=#660066;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="prometheus" target="grafana">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

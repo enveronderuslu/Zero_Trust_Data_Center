@@ -1,0 +1,6 @@
+sudo dnf install freeipa-client -y
+
+sudo ipa-client-install --mkhomedir \
+
+ipa-client-install --uninstall
+

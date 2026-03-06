@@ -1,0 +1,47 @@
+System Update & Essential Virtualization Packages
+```bash
+  sudo dnf update -y
+  sudo dnf install -y qemu-kvm libvirt virt-install libvirt-client
+```
+
+Virtualization Capability & Hypervisor Validation
+
+```bash
+ lscpu | grep Virtualization # CPU virtualization support verification
+ lsmod | grep kvm # KVM kernel module verification
+ sudo virt-host-validate   Libvirt and host virtualization validation
+ ```
+Libvirt Service Enablement
+
+``bash
+# Enable and start libvirt daemon:
+sudo systemctl enable --now libvirtd
+sudo systemctl status libvirtd
+sudo dnf install guestfs-tools
+
+```
+
+Host-Level Security Hardening
+```bash
+ getenforce # SELinux status verification and enforcement
+ sudo setenforce 1
+```
+
+# Edit SSH daemon configuration file (/etc/ssh/sshd_config):
+```yaml
+ PermitRootLogin no
+ PasswordAuthentication no
+```
+# Apply configuration changes
+```bash
+sudo systemctl restart sshd
+```
+
+
+User Permissions & Libvirt Access Control
+``bash
+ sudo usermod -aG libvirt $(whoami) # Add current user to libvirt group. Re-login required
+ virsh list --all # Libvirt access verification:
+  Id   Name   State      # Expected output format:
+  --------------------
+```
