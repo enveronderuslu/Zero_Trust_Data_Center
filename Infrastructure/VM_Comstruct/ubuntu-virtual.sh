@@ -5,7 +5,7 @@ read user
 echo "(host?).example.local"
 read host
 
-SOURCE="/var/lib/libvirt/images/ubuntu.qcow2"
+SOURCE="/var/lib/libvirt/images/10.07.MGMT-BASTION.qcow2"
 DEST="/var/lib/libvirt/images/$user.qcow2"
 
 sudo cp -p "$SOURCE" "$DEST"
@@ -19,11 +19,11 @@ sudo virt-sysprep -a "$DEST" \
 
 sudo virt-install \
   --name "$user" \
-  --ram "1024" \
+  --ram "2048" \
   --vcpus "1" \
   --disk path="$DEST" \
   --import \
-  --os-variant fedora42 \
+  --os-variant ubuntu24.04 \
   --network network=LAB \
   --graphics vnc \
   --noautoconsole
