@@ -14,6 +14,8 @@ This project provides a production-ready Virtual Data Center (VDC) built on Zero
 - **Automation & IaC:** Ansible (Agentless Configuration Management, Playbook Development), Shell Scripting.
 - **Observability:** Prometheus (Metrics), Loki (Log Aggregation), Grafana (Visualization), Node Exporter, Promtail.
 
+---
+
 ## Network Architecture
 
 The architecture is segmented into eight discrete VLANs to minimize the attack surface and enforce strict traffic control. Every internal and external communication path is inspected by the pfSense firewall.
