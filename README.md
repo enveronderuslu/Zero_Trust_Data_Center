@@ -1,13 +1,12 @@
 # Zero-Trust Virtual Data Center
- 
+
 ## About
 This project provides a production-ready Virtual Data Center (VDC) built on Zero-Trust principles. It focuses on automated deployment, network security, and centralized identity management. The infrastructure uses tools and technologies such as **pfSense, Suricata, Squid, FreeIPA, Ansible, Nginx, MariaDB, Docker Rootless, Prometheus, Loki, Grafana, Promtail, Node Exporter, Rocky Linux, and Alpine Linux.**
 
 ## Technical Stack
-Tech Stack
 - **Virtualization:** KVM/QEMU, Libvirt, Virt-Manager.
 - **Operating Systems:** Rocky Linux 10.1, Alpine Linux.
-- **Network & Security:** pfSense, VLAN Segmentation, Suricata (IDS/IPS), Squid Proxy, Openvpn VPN.
+- **Network & Security:** pfSense, VLAN Segmentation, Suricata, Squid Proxy, Openvpn VPN.
 - **Identity & IAM:** FreeIPA (LDAP, Kerberos, DNS, NTP, CA, RBAC/HBAC).
 - **Web & Proxy:** Nginx (Reverse Proxy), Squid (Proxy).
 - **Containerization:** Docker (Rootless Mode).

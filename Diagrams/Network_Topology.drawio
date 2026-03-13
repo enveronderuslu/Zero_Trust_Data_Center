@@ -1,76 +1,76 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0" version="29.5.2">
+<mxfile host="app.diagrams.net" version="29.5.2">
   <diagram id="full-iconic-vdc" name="Zero-Trust Complete Architecture">
     <mxGraphModel dx="1042" dy="640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="fw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E60000;strokeColor=#800000;fontColor=#FFFFFF;align=center;verticalAlign=middle;shadow=1;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;pfSense Firewall&lt;/b&gt;&lt;br&gt;Suricata IDS/IPS&lt;br&gt;Squid Proxy" vertex="1">
-          <mxGeometry height="80" width="180" x="320" y="100" as="geometry" />
+          <mxGeometry height="60" width="132" x="186" y="72" as="geometry" />
         </mxCell>
         <mxCell id="wan" parent="1" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#0066FF;strokeColor=#003399;fontColor=#FFFFFF;shadow=1;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;INTERNET (WAN)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="70" width="140" x="340" y="10" as="geometry" />
+          <mxGeometry height="54" width="108" x="198" y="6" as="geometry" />
         </mxCell>
-        <mxCell id="c1" edge="1" parent="1" source="wan" style="strokeWidth=3;strokeColor=#0066FF;" target="fw">
+        <mxCell id="c1" edge="1" parent="1" source="wan" style="strokeWidth=2.4;strokeColor=#0066FF;" target="fw">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="trunk" edge="1" parent="1" style="endArrow=none;html=1;strokeWidth=6;strokeColor=#4B0082;" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="40" y="220" as="sourcePoint" />
-            <mxPoint x="780" y="220" as="targetPoint" />
+        <mxCell id="trunk" edge="1" parent="1" style="endArrow=none;html=1;strokeWidth=4.8;strokeColor=#4B0082;" value="">
+          <mxGeometry height="30" relative="1" width="30" as="geometry">
+            <mxPoint x="12" y="156" as="sourcePoint" />
+            <mxPoint x="486" y="156" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2" edge="1" parent="1" source="fw" style="strokeWidth=3;strokeColor=#4B0082;">
+        <mxCell id="c2" edge="1" parent="1" source="fw" style="strokeWidth=2.4;strokeColor=#4B0082;">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="410" y="220" as="targetPoint" />
+            <mxPoint x="252" y="156" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="z1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CCCCCC;strokeColor=#333333;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;MGMT (VLAN 10)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="40" y="250" as="geometry" />
+        <mxCell id="z1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CCCCCC;strokeColor=#333333;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;MGMT (VLAN 10)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="12" y="180" as="geometry" />
         </mxCell>
         <mxCell id="s1" parent="z1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="🛡️ Jump Server&lt;br&gt;⚙️ Ansible Ctrl&lt;br&gt;🆔 FreeIPA" vertex="1">
-          <mxGeometry height="60" width="130" x="10" y="35" as="geometry" />
+          <mxGeometry height="48" width="84" x="6" y="27" as="geometry" />
         </mxCell>
-        <mxCell id="z2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#00CCFF;strokeColor=#0088AA;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;CORPLAN (VLAN 20)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="220" y="250" as="geometry" />
+        <mxCell id="z2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#00CCFF;strokeColor=#0088AA;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;CORPLAN (V20)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="126" y="180" as="geometry" />
         </mxCell>
         <mxCell id="s2" parent="z2" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="💻 Workstations&lt;br&gt;🏢 Internal Users" vertex="1">
-          <mxGeometry height="40" width="130" x="10" y="45" as="geometry" />
+          <mxGeometry height="30" width="78" x="6" y="36" as="geometry" />
         </mxCell>
-        <mxCell id="z3" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFD700;strokeColor=#B8860B;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;DMZ (VLAN 30)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="400" y="250" as="geometry" />
+        <mxCell id="z3" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFD700;strokeColor=#B8860B;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;DMZ (VLAN 30)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="240" y="180" as="geometry" />
         </mxCell>
         <mxCell id="s3" parent="z3" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="🌐 Nginx Proxy&lt;br&gt;🏔️ Alpine OS" vertex="1">
-          <mxGeometry height="40" width="130" x="10" y="45" as="geometry" />
+          <mxGeometry height="30" width="78" x="6" y="36" as="geometry" />
         </mxCell>
-        <mxCell id="z4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#32CD32;strokeColor=#006400;fontColor=#FFFFFF;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;APP (VLAN 40)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="580" y="250" as="geometry" />
+        <mxCell id="z4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#32CD32;strokeColor=#006400;fontColor=#FFFFFF;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;APP (VLAN 40)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="354" y="180" as="geometry" />
         </mxCell>
         <mxCell id="s4" parent="z4" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="🐳 Docker&lt;br&gt;🚀 Web App" vertex="1">
-          <mxGeometry height="40" width="130" x="10" y="45" as="geometry" />
+          <mxGeometry height="30" width="90" x="6" y="36" as="geometry" />
         </mxCell>
-        <mxCell id="z5" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FF33FF;strokeColor=#990099;fontColor=#FFFFFF;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;DB (VLAN 50)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="40" y="390" as="geometry" />
+        <mxCell id="z5" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FF33FF;strokeColor=#990099;fontColor=#FFFFFF;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;DB (VLAN 50)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="12" y="282" as="geometry" />
         </mxCell>
         <mxCell id="s5" parent="z5" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="🗄️ MariaDB" vertex="1">
-          <mxGeometry height="30" width="90" x="10" y="55" as="geometry" />
+          <mxGeometry height="18" width="54" x="6" y="42" as="geometry" />
         </mxCell>
-        <mxCell id="z6" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#8B4513;fontColor=#FFFFFF;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;SEC (VLAN 60)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="220" y="390" as="geometry" />
+        <mxCell id="z6" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FF8C00;strokeColor=#8B4513;fontColor=#FFFFFF;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;SEC (VLAN 60)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="126" y="282" as="geometry" />
         </mxCell>
-        <mxCell id="s6" parent="z6" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="📊 Grafana&lt;br&gt;📈 Prometheus" vertex="1">
-          <mxGeometry height="50" width="130" x="10" y="45" as="geometry" />
+        <mxCell id="s6" parent="z6" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="📊 Grafana&lt;br&gt;📑 Loki&lt;br&gt;📈 Prometh." vertex="1">
+          <mxGeometry height="42" width="84" x="6" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="z7" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#00FFCC;strokeColor=#009988;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;GUEST (VLAN 70)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="400" y="390" as="geometry" />
+        <mxCell id="z7" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#00FFCC;strokeColor=#009988;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;GUEST (V70)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="240" y="282" as="geometry" />
         </mxCell>
         <mxCell id="s7" parent="z7" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="📶 Guest WiFi&lt;br&gt;🚫 No Access" vertex="1">
-          <mxGeometry height="40" width="130" x="10" y="45" as="geometry" />
+          <mxGeometry height="30" width="78" x="6" y="36" as="geometry" />
         </mxCell>
-        <mxCell id="z8" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CC0000;strokeColor=#660000;fontColor=#FFFFFF;startSize=25;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;BACKUP (VLAN 80)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="120" width="160" x="580" y="390" as="geometry" />
+        <mxCell id="z8" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CC0000;strokeColor=#660000;fontColor=#FFFFFF;startSize=18;fontFamily=Liberation Sans;fontSize=12;" value="&lt;b&gt;BACKUP (V80)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="90" width="108" x="354" y="282" as="geometry" />
         </mxCell>
-        <mxCell id="s8" parent="z8" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="💾 Backup Server" vertex="1">
-          <mxGeometry height="30" width="130" x="10" y="55" as="geometry" />
+        <mxCell id="s8" parent="z8" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Liberation Sans;fontSize=12;" value="💾 Backup Srv" vertex="1">
+          <mxGeometry height="18" width="78" x="6" y="42" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
