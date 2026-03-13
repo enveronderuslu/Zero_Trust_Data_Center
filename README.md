@@ -65,9 +65,9 @@ The entire environment is managed via Ansible. This ensures configuration consis
 
 ```bash
 .
-├── Configs/                # pfSense config.xml and base system configurations
-├── Diagrams/               # Source (.drawio) and exported (.png) architecture files
-├── Documentation/          # Technical reports and asset inventory (ODS/ODT)
+├── Configs/                # pfSense config.xml. Network configs
+├── Diagrams/               # Source and exported architecture files
+├── Documentation/          # Technical reports and asset inventory
 ├── Infrastructure/         # Technical configuration files and scripts
 │   ├── Ansible/            # Production playbooks, roles, and inventory
 │   ├── IPA_DNS/            # Identity management and DNS zone files
