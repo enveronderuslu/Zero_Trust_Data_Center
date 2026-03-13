@@ -1,4 +1,4 @@
-# Zero-Trust Virtual Data Center Infrastructure
+# Zero-Trust Virtual Data Center
  
 ## About
 This project provides a production-ready Virtual Data Center (VDC) built on Zero-Trust principles. It focuses on automated deployment, network security, and centralized identity management. The infrastructure uses tools and technologies such as **pfSense, Suricata, Squid, FreeIPA, Ansible, Nginx, MariaDB, Docker Rootless, Prometheus, Loki, Grafana, Promtail, Node Exporter, Rocky Linux, and Alpine Linux.**
