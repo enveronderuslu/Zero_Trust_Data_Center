@@ -20,7 +20,7 @@ This project provides a production-ready Virtual Data Center (VDC) built on Zero
 
 The architecture is segmented into eight discrete VLANs to minimize the attack surface and enforce strict traffic control. Every internal and external communication path is inspected by the pfSense firewall.
 
-![Network Topology](Diagrams/Network_Topology.drawio.png)
+![Network Topology](Diagrams/Network_Topology.drawio)
 
 ### Network Segmentation (VLANs)
 - **MGMT (VLAN 10):** Management Plane. Hosts the Jump Server and Ansible Controller for centralized administrative control.
@@ -72,3 +72,5 @@ The entire environment is managed via Ansible. This ensures configuration consis
 ├── Screenshots/            # System implementation and dashboard evidence
 └── README.md
 ```
+
+   
