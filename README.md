@@ -71,52 +71,54 @@ The goal of this project is to simulate a production-like secure infrastructure 
 ## Architecture
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'primaryColor': '#1a5fb4', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1a5fb4', 'lineColor': '#777', 'secondaryColor': '#f6f5f4', 'tertiaryColor': '#ffffff' }}}%%
 graph TD
-    subgraph External_Network [External]
-        Internet((Internet))
+    subgraph External_Network [ ]
+        Internet((🌐 Internet))
     end
 
-    subgraph Gateway [pfSense Firewall]
+    subgraph Gateway [🛡️ pfSense Security Gateway]
         FW[Firewall / Suricata]
-        VPN[OpenVPN - Port 1194]
-        Squid[Squid Proxy - Port 3128]
+        VPN[OpenVPN]
+        Squid[Squid Proxy]
     end
 
-    subgraph VLAN_Segmentation [Network Segments]
-        MGMT[MGMT - 10.0.10.1/24]
-        CORPLAN[CORPLAN - 10.0.20.1/24]
-        DMZ[DMZ - 10.0.30.1/24]
-        APP[APPLOGIC - 10.0.40.1/24]
-        DB[(DB - 10.0.50.1/24)]
-        SEC[SEC - 10.0.60.1/24]
-        GUEST[GUEST - DHCP]
-        BACKUP[BACKUPZONE - 10.0.80.1/24]
+    subgraph VDC [🏗️ Virtual Data Center Segments]
+        MGMT[<b>MGMT (VLAN 10)</b><br/>Ansible & JumpHost]
+        DMZ[<b>DMZ (VLAN 30)</b><br/>Nginx Reverse Proxy]
+        APP[<b>APPLOGIC (VLAN 40)</b><br/>Rootless Docker]
+        DB[(<b>DB (VLAN 50)</b><br/>MariaDB)]
+        SEC[<b>SEC (VLAN 60)</b><br/>FreeIPA & Monitoring]
+        BACKUP[<b>BACKUP (VLAN 80)</b><br/>BackupZone]
     end
 
-    %% External Connections
+    %% Connectivity logic
     Internet <--> FW
     FW <--> VPN
     
-    %% NAT & Port Forwarding Logic
-    Internet -.->|Port 1443| DMZ
-    Internet -.->|Port 44380| SEC
-    Internet -.->|Port 19090| SEC
+    %% Traffic flows
+    FW === MGMT
+    FW === DMZ
+    FW === APP
+    FW === DB
+    FW === SEC
+    FW === BACKUP
 
-    %% Internal Routing
-    FW <--> MGMT
-    FW <--> CORPLAN
-    FW <--> DMZ
-    FW <--> APP
-    FW <--> DB
-    FW <--> SEC
-    FW <--> GUEST
-    FW <--> BACKUP
+    %% Specific interactions
+    DMZ -.->|Port 18080| APP
+    APP -.->|Port 3306| DB
+    SEC -.->|Auth/Authz| APP
+    SEC -.->|Logs/Metrics| MGMT
 
-    %% Specific Communication Rules from Config
-    DMZ -.->|HTTP 18080| APP
-    APP -.->|SQL 3306| DB
-    MGMT -.->|SSH 22| APP
-    SEC -.->|Prometheus/Loki| MGMT
+    style FW fill:#e01b24,stroke:#a51d2d,stroke-width:2px,color:#fff
+    style VPN fill:#1c71d8,stroke:#1a5fb4,color:#fff
+    style Internet fill:#9a9996,stroke:#5e5c64,color:#fff
+    style MGMT fill:#f6f5f4,stroke:#333,stroke-width:2px
+    style DMZ fill:#f6f5f4,stroke:#333,stroke-width:2px
+    style APP fill:#f6f5f4,stroke:#333,stroke-width:2px
+    style DB fill:#f6f5f4,stroke:#333,stroke-width:2px
+    style SEC fill:#f6f5f4,stroke:#333,stroke-width:2px
+    style BACKUP fill:#f6f5f4,stroke:#333,stroke-width:2px
 ```
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
 
