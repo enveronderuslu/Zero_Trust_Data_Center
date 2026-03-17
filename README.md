@@ -72,5 +72,4 @@ The entire environment is managed via Ansible. This ensures configuration consis
 ├── Screenshots/            # System implementation and dashboard evidence
 └── README.md
 ```
-
-   
+    
