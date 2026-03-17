@@ -70,34 +70,36 @@ The goal of this project is to simulate a production-like secure infrastructure 
 
 ## Architecture
 
-
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'primaryColor': '#1a5fb4', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1a5fb4', 'lineColor': '#777', 'secondaryColor': '#f6f5f4', 'tertiaryColor': '#ffffff' }}}%%
 graph TD
-    subgraph External_Network [ ]
+    %% Global Styles
+    classDef firewall fill:#f96,stroke:#333,stroke-width:2px;
+    classDef vlan fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef external fill:#cfd8dc,stroke:#263238,stroke-width:2px;
+
+    subgraph External [External Network]
         Internet((🌐 Internet))
     end
 
     subgraph Gateway [🛡️ pfSense Security Gateway]
-        FW[Firewall / Suricata]
+        FW[Firewall / Suricata]:::firewall
         VPN[OpenVPN]
-        Squid[Squid Proxy]
+        Proxy[Squid Proxy]
     end
 
     subgraph VDC [🏗️ Virtual Data Center Segments]
-        MGMT[<b>MGMT (VLAN 10)</b><br/>Ansible & JumpHost]
-        DMZ[<b>DMZ (VLAN 30)</b><br/>Nginx Reverse Proxy]
-        APP[<b>APPLOGIC (VLAN 40)</b><br/>Rootless Docker]
-        DB[(<b>DB (VLAN 50)</b><br/>MariaDB)]
-        SEC[<b>SEC (VLAN 60)</b><br/>FreeIPA & Monitoring]
-        BACKUP[<b>BACKUP (VLAN 80)</b><br/>BackupZone]
+        MGMT[<b>MGMT (VLAN 10)</b><br/>Ansible & JumpHost]:::vlan
+        DMZ[<b>DMZ (VLAN 30)</b><br/>Nginx Reverse Proxy]:::vlan
+        APP[<b>APPLOGIC (VLAN 40)</b><br/>Rootless Docker]:::vlan
+        DB[(<b>DB (VLAN 50)</b><br/>MariaDB)]:::vlan
+        SEC[<b>SEC (VLAN 60)</b><br/>FreeIPA & Monitoring]:::vlan
+        BACKUP[<b>BACKUP (VLAN 80)</b><br/>BackupZone]:::vlan
     end
 
-    %% Connectivity logic
+    %% Routing
     Internet <--> FW
     FW <--> VPN
     
-    %% Traffic flows
     FW === MGMT
     FW === DMZ
     FW === APP
@@ -105,22 +107,15 @@ graph TD
     FW === SEC
     FW === BACKUP
 
-    %% Specific interactions
-    DMZ -.->|Port 18080| APP
-    APP -.->|Port 3306| DB
-    SEC -.->|Auth/Authz| APP
-    SEC -.->|Logs/Metrics| MGMT
+    %% Data Flow
+    DMZ -.->|HTTPS| APP
+    APP -.->|SQL| DB
+    SEC -.->|Auth| APP
+    SEC -.->|Logs| MGMT
 
-    style FW fill:#e01b24,stroke:#a51d2d,stroke-width:2px,color:#fff
-    style VPN fill:#1c71d8,stroke:#1a5fb4,color:#fff
-    style Internet fill:#9a9996,stroke:#5e5c64,color:#fff
-    style MGMT fill:#f6f5f4,stroke:#333,stroke-width:2px
-    style DMZ fill:#f6f5f4,stroke:#333,stroke-width:2px
-    style APP fill:#f6f5f4,stroke:#333,stroke-width:2px
-    style DB fill:#f6f5f4,stroke:#333,stroke-width:2px
-    style SEC fill:#f6f5f4,stroke:#333,stroke-width:2px
-    style BACKUP fill:#f6f5f4,stroke:#333,stroke-width:2px
+    class Internet external;
 ```
+
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
 
 - MGMT – Management & Ansible
