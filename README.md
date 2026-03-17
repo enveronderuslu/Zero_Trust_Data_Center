@@ -1,75 +1,126 @@
-# Zero-Trust Virtual Data Center
+# Zero-Trust Virtual Data Center (PoC)
 
-## About
-This project provides a production-ready Virtual Data Center (VDC) built on Zero-Trust principles. It focuses on automated deployment, network security, and centralized identity management. The infrastructure uses tools and technologies such as **pfSense, Suricata, Squid, FreeIPA, Ansible, Nginx, MariaDB, Docker Rootless, Prometheus, Loki, Grafana, Promtail, Node Exporter, Rocky Linux, and Alpine Linux.**
 
-## Technical Stack
-- **Virtualization:** KVM/QEMU, Libvirt, Virt-Manager.
-- **Operating Systems:** Rocky Linux 10.1, Alpine Linux.
-- **Network & Security:** pfSense, VLAN Segmentation, Suricata, Squid Proxy, Openvpn VPN.
-- **Identity & IAM:** FreeIPA (LDAP, Kerberos, DNS, NTP, CA, RBAC/HBAC).
-- **Web & Proxy:** Nginx (Reverse Proxy), Squid (Proxy).
-- **Containerization:** Docker (Rootless Mode).
-- **Databases:** MariaDB.
-- **Automation & IaC:** Ansible (Agentless Configuration Management, Playbook Development), Shell Scripting.
-- **Observability:** Prometheus (Metrics), Loki (Log Aggregation), Grafana (Visualization), Node Exporter, Promtail.
+## Purpose of this Project
+
+This project demonstrates practical skills in:
+- Linux system administration
+- Network security and segmentation
+- Infrastructure automation
+- Monitoring and observability
 
 ---
 
-## Network Architecture 
+## Overview
+This repository contains a Proof of Concept (PoC) of a Virtual Data Center designed with Zero-Trust principles. The focus is on network security, system hardening, automation, and centralized identity management.
 
-The architecture is segmented into eight discrete VLANs to minimize the attack surface and enforce strict traffic control. Every internal and external communication path is inspected by the pfSense firewall.
+The goal of this project is to simulate a production-like secure infrastructure and demonstrate practical skills in Linux administration and IT security.
 
-![Network Topology](Diagrams/Network_Topology.drawio.png)
+---
 
-### Network Segmentation (VLANs)
-- **MGMT (VLAN 10):** Management Plane. Hosts the Jump Server and Ansible Controller for centralized administrative control.
-- **CORPLAN (VLAN 20):** Corporate LAN segment for internal trusted services.
-- **DMZ (VLAN 30):** Perimeter network isolating public-facing services (Nginx).
-- **APP (VLAN 40):** Application Logic layer utilizing Rootless Docker containers for privilege escalation mitigation.
-- **DB (VLAN 50):** Database Tier hosting MariaDB with LUKS-level disk encryption.
-- **SEC (VLAN 60):** Security Operations Center (SOC) stack for centralized monitoring.
-- **GUEST (VLAN 70):** Isolated guest segment with strictly regulated internet-only access.
-- **BACKUP (VLAN 80):** Storage layer for automated backups and Golden Image preservation.
+## Key Features
+- Zero-Trust architecture (deny-by-default communication)
+- Network segmentation using VLANs
+- Centralized Identity & Access Management (FreeIPA)
+- Infrastructure as Code (Ansible)
+- Full monitoring and logging stack
+- Containerized workloads (Rootless Docker)
+- Secure service deployment (Nginx, MariaDB)
 
-## Security Framework (Zero-Trust Flow)
+---
 
-The core security model assumes no trust between network segments. Traffic is denied by default and only explicitly permitted through granular firewall policies based on the principle of least privilege.
+## Technology Stack
 
-### Identity & Access Governance
-Centralized identity management is managed by FreeIPA. The system utilizes HBAC and RBAC to restrict administrative access to authorized personnel via a secure Jump Server.
+**Virtualization**
+- KVM / QEMU
+- Libvirt / Virt-Manager
 
-## Observability and Monitoring
+**Operating Systems**
+- Rocky Linux
+- Alpine Linux
 
-- **Metric Collection:** Prometheus scrapes system-level metrics via Node Exporter.
-- **Log Management:** Promtail ships logs from all nodes to a centralized Loki instance.
-- **Data Visualization:** Grafana provides dashboards for real-time analysis.
+**Network & Security**
+- pfSense (Firewall)
+- Suricata (IDS)
+- VLAN segmentation
+- OpenVPN
+- Squid Proxy
 
-![Observability Stack](Diagrams/Observability_Stack.drawio.png)
+**Identity Management**
+- FreeIPA (LDAP, Kerberos, RBAC, HBAC)
 
-## Automation and Infrastructure as Code (IaC)
+**Services**
+- Nginx (Reverse Proxy)
+- MariaDB
 
-The entire environment is managed via Ansible. This ensures configuration consistency across all VLANs, eliminates manual errors, and provides a scalable framework for automated deployments.
+**Containerization**
+- Docker (Rootless)
+
+**Automation**
+- Ansible (Agentless, Playbooks, Roles)
+
+**Monitoring & Logging**
+- Prometheus
+- Grafana
+- Loki
+- Promtail
+- Node Exporter
+
+---
+
+## Architecture
+
+The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
+
+- MGMT – Management & Ansible
+- DMZ – Public services
+- APP – Application layer
+- DB – Database layer (encrypted)
+- SEC – Monitoring & logging
+- GUEST – Isolated network
+- BACKUP – Backup storage
+
+All traffic is filtered and controlled via pfSense firewall rules.
+
+---
+
+## Security Concept
+
+- Zero-Trust model (no implicit trust)
+- Least privilege access
+- Central authentication via FreeIPA
+- Controlled admin access via Jump Server
+- Segmented network with strict firewall rules
+
+---
+
+## Automation
+
+The entire environment is managed using Ansible, ensuring:
+- Consistent configuration
+- Reproducible deployments
+- Minimal manual intervention
+
+---
+
+## Monitoring & Logging
+
+- Metrics collection with Prometheus
+- Central log aggregation via Loki
+- Visualization using Grafana dashboards
+
+---
 
 ## Repository Structure
 
-```bash
-.
-├── Configs/                # pfSense config.xml. Network configs
-├── Diagrams/               # Source and exported architecture files
-├── Documentation/          # Technical reports and asset inventory
-├── Infrastructure/         # Technical configuration files and scripts
-│   ├── Ansible/            # Production playbooks, roles, and inventory
-│   ├── IPA_DNS/            # Identity management and DNS zone files
-│   ├── MariaDB/            # Database hardening and schema configurations
-│   ├── Nginx/              # Reverse proxy and TLS configurations
-│   ├── Squid/              # Web filtering and proxy rules
-│   └── Observability/      # Monitoring and Logging stack configurations
-│       ├── Grafana/        # Dashboard JSONs and data source YAMLs
-│       ├── Prometheus/     # Scrape configurations and alert rules
-│       ├── Loki/           # Log retention and storage settings
-│       └── Promtail/       # Log collection and labeling pipelines
-├── Screenshots/            # System implementation and dashboard evidence
-└── README.md
-```
-    
+Configs/           # Network and firewall configs
+Infrastructure/    # Ansible, services, system configs
+Documentation/     # Technical documentation
+Diagrams/          # Architecture diagrams
+Screenshots/       # Implementation proof
+
+---
+
+
+## Notes
+This is a personal PoC project created for learning and demonstration purposes.
