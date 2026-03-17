@@ -70,42 +70,53 @@ The goal of this project is to simulate a production-like secure infrastructure 
 
 ## Architecture
 
-## Architecture
-
 ```mermaid
 graph TD
-    subgraph External
+    subgraph External_Network [External]
         Internet((Internet))
     end
 
-    subgraph Security_Gateway [pfSense Firewall & IDS]
+    subgraph Gateway [pfSense Firewall]
         FW[Firewall / Suricata]
-        VPN[OpenVPN]
-        Proxy[Squid Proxy]
+        VPN[OpenVPN - Port 1194]
+        Squid[Squid Proxy - Port 3128]
     end
 
-    subgraph Networks [VLAN Segmentation]
-        MGMT[MGMT - Ansible / JumpHost]
-        DMZ[DMZ - Nginx Reverse Proxy]
-        APP[APP - Rootless Docker]
-        DB[(DB - MariaDB Encrypted)]
-        SEC[SEC - FreeIPA / Monitoring]
-        GUEST[GUEST - Isolated]
+    subgraph VLAN_Segmentation [Network Segments]
+        MGMT[MGMT - 10.0.10.1/24]
+        CORPLAN[CORPLAN - 10.0.20.1/24]
+        DMZ[DMZ - 10.0.30.1/24]
+        APP[APPLOGIC - 10.0.40.1/24]
+        DB[(DB - 10.0.50.1/24)]
+        SEC[SEC - 10.0.60.1/24]
+        GUEST[GUEST - DHCP]
+        BACKUP[BACKUPZONE - 10.0.80.1/24]
     end
 
+    %% External Connections
     Internet <--> FW
+    FW <--> VPN
+    
+    %% NAT & Port Forwarding Logic
+    Internet -.->|Port 1443| DMZ
+    Internet -.->|Port 44380| SEC
+    Internet -.->|Port 19090| SEC
+
+    %% Internal Routing
     FW <--> MGMT
+    FW <--> CORPLAN
     FW <--> DMZ
     FW <--> APP
     FW <--> DB
     FW <--> SEC
     FW <--> GUEST
+    FW <--> BACKUP
 
-    %% Traffic Flow Examples
-    DMZ -.-> APP
-    APP -.-> DB
-    SEC -.-> MGMT
-    SEC -.-> APP
+    %% Specific Communication Rules from Config
+    DMZ -.->|HTTP 18080| APP
+    APP -.->|SQL 3306| DB
+    MGMT -.->|SSH 22| APP
+    SEC -.->|Prometheus/Loki| MGMT
 ```
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
 
