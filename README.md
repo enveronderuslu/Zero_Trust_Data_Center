@@ -73,27 +73,27 @@ The goal of this project is to simulate a production-like secure infrastructure 
 ```mermaid
 graph TD
     %% Global Styles
-    classDef firewall fill:#f96,stroke:#333,stroke-width:2px;
-    classDef vlan fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
-    classDef external fill:#cfd8dc,stroke:#263238,stroke-width:2px;
+    classDef firewall fill:#e01b24,stroke:#333,stroke-width:2px,color:#fff;
+    classDef vlan fill:#f6f5f4,stroke:#333,stroke-width:2px;
+    classDef external fill:#9a9996,stroke:#333,color:#fff;
 
-    subgraph External [External Network]
-        Internet((🌐 Internet))
+    subgraph External_Network [External]
+        Internet((Internet))
     end
 
-    subgraph Gateway [🛡️ pfSense Security Gateway]
+    subgraph Gateway [pfSense Security Gateway]
         FW[Firewall / Suricata]:::firewall
         VPN[OpenVPN]
         Proxy[Squid Proxy]
     end
 
-    subgraph VDC [🏗️ Virtual Data Center Segments]
-        MGMT[<b>MGMT (VLAN 10)</b><br/>Ansible & JumpHost]:::vlan
-        DMZ[<b>DMZ (VLAN 30)</b><br/>Nginx Reverse Proxy]:::vlan
-        APP[<b>APPLOGIC (VLAN 40)</b><br/>Rootless Docker]:::vlan
-        DB[(<b>DB (VLAN 50)</b><br/>MariaDB)]:::vlan
-        SEC[<b>SEC (VLAN 60)</b><br/>FreeIPA & Monitoring]:::vlan
-        BACKUP[<b>BACKUP (VLAN 80)</b><br/>BackupZone]:::vlan
+    subgraph VDC [Virtual Data Center Segments]
+        MGMT[MGMT VLAN 10 - Ansible]:::vlan
+        DMZ[DMZ VLAN 30 - Nginx]:::vlan
+        APP[APPLOGIC VLAN 40 - Docker]:::vlan
+        DB[(DB VLAN 50 - MariaDB)]:::vlan
+        SEC[SEC VLAN 60 - FreeIPA]:::vlan
+        BACKUP[BACKUP VLAN 80 - Storage]:::vlan
     end
 
     %% Routing
@@ -108,10 +108,10 @@ graph TD
     FW === BACKUP
 
     %% Data Flow
-    DMZ -.->|HTTPS| APP
-    APP -.->|SQL| DB
-    SEC -.->|Auth| APP
-    SEC -.->|Logs| MGMT
+    DMZ -.-> APP
+    APP -.-> DB
+    SEC -.-> APP
+    SEC -.-> MGMT
 
     class Internet external;
 ```
