@@ -106,7 +106,7 @@ graph TD
     APP -.-> DB
     SEC -.-> MGMT
     SEC -.-> APP
-
+```
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
 
 - MGMT – Management & Ansible
