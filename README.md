@@ -88,11 +88,11 @@ graph TD
     end
 
     subgraph VDC [Virtual Data Center Segments]
-        MGMT[MGMT VLAN 10 - Ansible]:::vlan
+        MGMT[MGMT VLAN 10 - JumpServer / FreeIPA / Ansible]:::vlan
         DMZ[DMZ VLAN 30 - Nginx]:::vlan
         APP[APPLOGIC VLAN 40 - Docker]:::vlan
         DB[(DB VLAN 50 - MariaDB)]:::vlan
-        SEC[SEC VLAN 60 - FreeIPA]:::vlan
+        SEC[SEC VLAN 60 - Prometheus / Grafana]:::vlan
         BACKUP[BACKUP VLAN 80 - Storage]:::vlan
     end
 
@@ -110,8 +110,9 @@ graph TD
     %% Data Flow
     DMZ -.-> APP
     APP -.-> DB
-    SEC -.-> APP
-    SEC -.-> MGMT
+    MGMT -.->|Auth / Identity| APP
+    SEC -.->|Monitoring| MGMT
+    SEC -.->|Monitoring| APP
 
     class Internet external;
 ```
