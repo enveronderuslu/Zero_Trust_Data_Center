@@ -70,6 +70,7 @@ The goal of this project is to simulate a production-like secure infrastructure 
 
 ## Architecture
 
+
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'primaryColor': '#1a5fb4', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1a5fb4', 'lineColor': '#777', 'secondaryColor': '#f6f5f4', 'tertiaryColor': '#ffffff' }}}%%
 graph TD
