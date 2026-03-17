@@ -73,9 +73,9 @@ The goal of this project is to simulate a production-like secure infrastructure 
 ```mermaid
 graph TD
     %% Global Styles
-    classDef firewall fill:#e01b24,stroke:#333,stroke-width:2px,color:#fff;
-    classDef vlan fill:#f6f5f4,stroke:#333,stroke-width:2px;
-    classDef external fill:#9a9996,stroke:#333,color:#fff;
+    classDef firewall fill:#a51d2d,stroke:#333,stroke-width:2px,color:#fff;
+    classDef vlan fill:#241f31,stroke:#62a0ea,stroke-width:2px,color:#eee;
+    classDef external fill:#3d3846,stroke:#9a9996,color:#fff;
 
     subgraph External_Network [External]
         Internet((Internet))
