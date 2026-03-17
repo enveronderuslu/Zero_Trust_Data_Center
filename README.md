@@ -70,6 +70,43 @@ The goal of this project is to simulate a production-like secure infrastructure 
 
 ## Architecture
 
+## Architecture
+
+```mermaid
+graph TD
+    subgraph External
+        Internet((Internet))
+    end
+
+    subgraph Security_Gateway [pfSense Firewall & IDS]
+        FW[Firewall / Suricata]
+        VPN[OpenVPN]
+        Proxy[Squid Proxy]
+    end
+
+    subgraph Networks [VLAN Segmentation]
+        MGMT[MGMT - Ansible / JumpHost]
+        DMZ[DMZ - Nginx Reverse Proxy]
+        APP[APP - Rootless Docker]
+        DB[(DB - MariaDB Encrypted)]
+        SEC[SEC - FreeIPA / Monitoring]
+        GUEST[GUEST - Isolated]
+    end
+
+    Internet <--> FW
+    FW <--> MGMT
+    FW <--> DMZ
+    FW <--> APP
+    FW <--> DB
+    FW <--> SEC
+    FW <--> GUEST
+
+    %% Traffic Flow Examples
+    DMZ -.-> APP
+    APP -.-> DB
+    SEC -.-> MGMT
+    SEC -.-> APP
+
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
 
 - MGMT – Management & Ansible
