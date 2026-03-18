@@ -72,49 +72,40 @@ The goal of this project is to simulate a production-like secure infrastructure 
 
 ```mermaid
 graph TD
-    %% Global Styles
-    classDef firewall fill:#a51d2d,stroke:#333,stroke-width:2px,color:#fff;
-    classDef vlan fill:#241f31,stroke:#62a0ea,stroke-width:2px,color:#eee;
-    classDef external fill:#3d3846,stroke:#9a9996,color:#fff;
-
     subgraph External_Network [External]
         Internet((Internet))
     end
 
     subgraph Gateway [pfSense Security Gateway]
-        FW[Firewall / Suricata]:::firewall
+        FW[Firewall / Suricata]
         VPN[OpenVPN]
         Proxy[Squid Proxy]
     end
 
     subgraph VDC [Virtual Data Center Segments]
-        MGMT[MGMT VLAN 10 - JumpServer / FreeIPA / Ansible]:::vlan
-        DMZ[DMZ VLAN 30 - Nginx]:::vlan
-        APP[APPLOGIC VLAN 40 - Docker]:::vlan
-        DB[(DB VLAN 50 - MariaDB)]:::vlan
-        SEC[SEC VLAN 60 - Prometheus / Grafana]:::vlan
-        BACKUP[BACKUP VLAN 80 - Storage]:::vlan
+        MGMT[MGMT VLAN 10 - JumpServer / FreeIPA / Ansible]
+        DMZ[DMZ VLAN 30 - Nginx]
+        APP[APPLOGIC VLAN 40 - Docker]
+        DB[(DB VLAN 50 - MariaDB)]
+        SEC[SEC VLAN 60 - Prometheus / Grafana]
+        BACKUP[BACKUP VLAN 80 - Storage]
     end
 
-    %% Routing
     Internet <--> FW
     FW <--> VPN
     
-    FW === MGMT
-    FW === DMZ
-    FW === APP
-    FW === DB
-    FW === SEC
-    FW === BACKUP
+    FW --- MGMT
+    FW --- DMZ
+    FW --- APP
+    FW --- DB
+    FW --- SEC
+    FW --- BACKUP
 
-    %% Data Flow
-    DMZ -.-> APP
-    APP -.-> DB
-    MGMT -.->|Auth / Identity| APP
-    SEC -.->|Monitoring| MGMT
-    SEC -.->|Monitoring| APP
-
-    class Internet external;
+    DMZ --> APP
+    APP --> DB
+    MGMT -->|Auth / Identity| APP
+    SEC -->|Monitoring| MGMT
+    SEC -->|Monitoring| APP
 ```
 
 The infrastructure is divided into multiple VLANs to reduce attack surface and enforce strict access control:
