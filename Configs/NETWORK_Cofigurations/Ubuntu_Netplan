@@ -8,8 +8,8 @@ network:
       id: 10
       link: enp1s0
       addresses:
-        - 10.0.10.6/24
-      gateway4: 10.0.10.1
+        - 10.10.10.11/24
+      gateway4: 10.10.10.1
       nameservers:
         addresses:
-          - 10.0.10.6
+          - 10.10.10.1

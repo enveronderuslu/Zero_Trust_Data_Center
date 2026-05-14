@@ -5,12 +5,12 @@ read user
 echo "(host?).example.local"
 read host
 
-SOURCE="/var/lib/libvirt/images/DOCKER.qcow2"
+SOURCE="/var/lib/libvirt/images/ubuntu2.qcow2"
 DEST="/var/lib/libvirt/images/$user.qcow2"
 
 sudo cp -p "$SOURCE" "$DEST"
 
-sudo qemu-img resize "$DEST" 20G
+sudo qemu-img resize "$DEST" 13G
 
 sudo virt-sysprep -a "$DEST" \
   --hostname "$host.example.local" \
@@ -24,6 +24,6 @@ sudo virt-install \
   --disk path="$DEST" \
   --import \
   --os-variant ubuntu24.04 \
-  --network network=LAB \
+  --network network=K8S \
   --graphics vnc \
   --noautoconsole
